@@ -9,15 +9,14 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" href="favicon.png">
 </head>
 <body>
 
     <!-- Custom Cursor -->
-    <div class="cursor-dot" id="cursorDot"></div>
-    <div class="cursor-ring" id="cursorRing"></div>
 
-    <!-- Particle Canvas -->
-    <canvas id="particleCanvas"></canvas>
+    <!-- Tech Nodes Background -->
+    <canvas id="bgNodesCanvas"></canvas>
 
     <!-- Floating Abstract 3D Shapes (background decoration) -->
     <div class="bg-shapes" aria-hidden="true">
@@ -65,19 +64,6 @@
         <div class="orb orb-blue orb-2"></div>
     </div>
 
-    <!-- Sound Toggle -->
-    <button class="sound-toggle" id="soundToggle" aria-label="Toggle ambient sound">
-        <svg class="sound-icon sound-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M11 5L6 9H2v6h4l5 4V5z"/>
-            <line x1="23" y1="9" x2="17" y2="15"/>
-            <line x1="17" y1="9" x2="23" y2="15"/>
-        </svg>
-        <svg class="sound-icon sound-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none">
-            <path d="M11 5L6 9H2v6h4l5 4V5z"/>
-            <path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
-            <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
-        </svg>
-    </button>
 
     <!-- ============ NAVIGATION ============ -->
     <nav class="top-nav" id="topNav">
@@ -234,7 +220,7 @@
             <div class="about-content">
                 <span class="section-tag reveal-item">Who We Are</span>
                 <h2 class="section-title reveal-item">We Build <span class="text-accent">Websites</span><br>That Drive <span class="text-accent-pink">Real Results</span>.</h2>
-                <p class="about-text reveal-item">We're a team of designers and developers passionate about helping businesses succeed online. Every website we create is crafted to attract customers, build trust, and convert visitors into paying clients.</p>
+                <p class="about-text reveal-item">Founded by Corné Venter and JG Coomans, we're a team of designers and developers passionate about helping businesses succeed online. Every website we create is crafted to attract customers, build trust, and convert visitors into paying clients.</p>
                 <p class="about-text reveal-item">Our approach is simple: <strong>if your website isn't helping your business grow — we're not done yet.</strong></p>
                 <div class="about-stats reveal-item">
                     <div class="stat">
@@ -242,7 +228,7 @@
                         <span class="stat-label">Projects Delivered</span>
                     </div>
                     <div class="stat">
-                        <span class="stat-number" data-count="12">0</span>
+                        <span class="stat-number" data-count="2">0</span>
                         <span class="stat-label">Years in Business</span>
                     </div>
                     <div class="stat">
@@ -262,51 +248,51 @@
             <p class="section-sub">Real projects, real results. Here's a selection of websites we've built for our clients.</p>
         </div>
         <div class="portfolio-grid">
-            <div class="float-card portfolio-card portfolio-card-lg reveal-item" data-tilt>
-                <div class="portfolio-img" style="background: linear-gradient(135deg, #2ECC7122, #00D4FF33);"></div>
+            <a href="https://corne7870.github.io/Restaurant/" class="float-card portfolio-card portfolio-card-lg portfolio-card-link reveal-item" data-tilt>
+                <div class="portfolio-img" style="background-image: url('portfolio_restaurant.png');"></div>
                 <div class="portfolio-overlay">
-                    <span class="portfolio-cat">E-Commerce Store</span>
-                    <h3>NeonMart</h3>
-                    <p>A modern online store with seamless checkout and product discovery.</p>
+                    <span class="portfolio-cat">Luxury Dining</span>
+                    <h3>Ultra-Premium Restaurant</h3>
+                    <p>Elegant visuals and a premium user experience for fine dining.</p>
                 </div>
                 <div class="card-glow"></div>
-            </div>
-            <div class="float-card portfolio-card reveal-item" data-tilt>
-                <div class="portfolio-img" style="background: linear-gradient(135deg, #FF2D7B22, #2ECC7133);"></div>
+            </a>
+            <a href="https://corne7870.github.io/Real-Estate/" class="float-card portfolio-card reveal-item portfolio-card-link" data-tilt>
+                <div class="portfolio-img" style="background-image: url('portfolio_real_estate.png');"></div>
                 <div class="portfolio-overlay">
-                    <span class="portfolio-cat">Brand Website</span>
-                    <h3>Pulse Studio</h3>
-                    <p>A premium brand website that builds trust and drives engagement.</p>
+                    <span class="portfolio-cat">Real Estate</span>
+                    <h3>Estate Elite</h3>
+                    <p>Premium platform for exclusive properties and luxury living.</p>
                 </div>
                 <div class="card-glow"></div>
-            </div>
-            <div class="float-card portfolio-card reveal-item" data-tilt>
-                <div class="portfolio-img" style="background: linear-gradient(135deg, #00D4FF22, #FF2D7B33);"></div>
+            </a>
+            <a href="https://corne7870.github.io/Car-Dealership/" class="float-card portfolio-card reveal-item portfolio-card-link" data-tilt>
+                <div class="portfolio-img" style="background-image: url('portfolio_car_dealership.png');"></div>
                 <div class="portfolio-overlay">
-                    <span class="portfolio-cat">Business Dashboard</span>
-                    <h3>DataStream</h3>
-                    <p>Real-time analytics dashboard for data-driven decision making.</p>
+                    <span class="portfolio-cat">Exotic Cars</span>
+                    <h3>Adrenaline Exotics</h3>
+                    <p>A digital experience for luxury exotic car enthusiasts.</p>
                 </div>
                 <div class="card-glow"></div>
-            </div>
-            <div class="float-card portfolio-card reveal-item" data-tilt>
-                <div class="portfolio-img" style="background: linear-gradient(135deg, #2ECC7122, #FF2D7B33);"></div>
+            </a>
+            <a href="https://corne7870.github.io/Digital-agency/" class="float-card portfolio-card portfolio-card-lg reveal-item portfolio-card-link" data-tilt>
+                <div class="portfolio-img" style="background-image: url('portfolio_nova_digital.png');"></div>
                 <div class="portfolio-overlay">
-                    <span class="portfolio-cat">SaaS Platform</span>
-                    <h3>Synapse AI</h3>
-                    <p>AI-powered platform with an intuitive user interface and clean UX.</p>
+                    <span class="portfolio-cat">Digital Agency</span>
+                    <h3>NOVA Digital</h3>
+                    <p>Designing the future through innovation and impact.</p>
                 </div>
                 <div class="card-glow"></div>
-            </div>
-            <div class="float-card portfolio-card portfolio-card-lg reveal-item" data-tilt>
-                <div class="portfolio-img" style="background: linear-gradient(135deg, #00D4FF22, #2ECC7133);"></div>
+            </a>
+            <a href="gym.html" class="float-card portfolio-card portfolio-card-lg reveal-item portfolio-card-link" data-tilt>
+                <div class="portfolio-img" style="background-image: url('portfolio_gym.png');"></div>
                 <div class="portfolio-overlay">
-                    <span class="portfolio-cat">Agency Website</span>
-                    <h3>Void Collective</h3>
-                    <p>A bold agency website that captures attention and wins clients.</p>
+                    <span class="portfolio-cat">Premium Fitness</span>
+                    <h3>Iron Pulse Gym</h3>
+                    <p>A high-performance training ground for transformation and elite athletic performance.</p>
                 </div>
                 <div class="card-glow"></div>
-            </div>
+            </a>
         </div>
     </section>
 
@@ -316,7 +302,7 @@
         <div class="footer-content">
             <div class="footer-brand">
                 <a href="index.html" class="footer-logo-link"><img src="logo 2.png" alt="Web Solution" class="footer-logo-img"></a>
-                <p>Building premium websites for businesses since 2014.</p>
+                <p>Building premium websites for businesses since 2024.</p>
             </div>
             <div class="footer-links">
                 <div class="footer-col">

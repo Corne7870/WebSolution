@@ -10,261 +10,135 @@
     const isMobile = window.matchMedia('(max-width: 768px)').matches;
 
     // ============================================================
-    // CUSTOM CURSOR — GLOWING ORB
-    // ============================================================
-    if (!isMobile) {
-        const dot = document.getElementById('cursorDot');
-        const ring = document.getElementById('cursorRing');
-
-        let dotX = 0, dotY = 0;
-        let ringX = 0, ringY = 0;
-        let targetX = 0, targetY = 0;
-        let trailCounter = 0;
-        let isHovering = false;
-
-        // Interactive selectors for magnetic + hover effect
-        const magneticSelectors = 'a, button, .btn, .service-card, .portfolio-card, .founder-link, .nav-link, .nav-logo, [data-tilt]';
-
-        document.addEventListener('mousemove', (e) => {
-            mouse.x = e.clientX;
-            mouse.y = e.clientY;
-        });
-
-        // Hover detection — toggles body class for CSS states
-        document.addEventListener('mouseover', (e) => {
-            if (e.target.closest(magneticSelectors)) {
-                isHovering = true;
-                document.body.classList.add('cursor-hovering');
-            }
-        });
-
-        document.addEventListener('mouseout', (e) => {
-            if (e.target.closest(magneticSelectors)) {
-                isHovering = false;
-                document.body.classList.remove('cursor-hovering');
-            }
-        });
-
-        // Click ripple
-        document.addEventListener('mousedown', (e) => {
-            const ripple = document.createElement('div');
-            ripple.className = 'cursor-ripple';
-            ripple.style.left = dotX + 'px';
-            ripple.style.top = dotY + 'px';
-            document.body.appendChild(ripple);
-            setTimeout(() => ripple.remove(), 700);
-        });
-
-        function animateCursor() {
-            // Compute target — apply magnetic pull if hovering an interactive el
-            targetX = mouse.x;
-            targetY = mouse.y;
-
-            if (isHovering) {
-                const hovered = document.elementFromPoint(mouse.x, mouse.y);
-                if (hovered) {
-                    const el = hovered.closest(magneticSelectors);
-                    if (el) {
-                        const rect = el.getBoundingClientRect();
-                        const centerX = rect.left + rect.width / 2;
-                        const centerY = rect.top + rect.height / 2;
-                        // Pull cursor 30% toward element center
-                        targetX = mouse.x + (centerX - mouse.x) * 0.3;
-                        targetY = mouse.y + (centerY - mouse.y) * 0.3;
-                    }
-                }
-            }
-
-            // Dot follows with smooth easing
-            dotX += (targetX - dotX) * 0.18;
-            dotY += (targetY - dotY) * 0.18;
-            dot.style.left = dotX + 'px';
-            dot.style.top = dotY + 'px';
-
-            // Ring follows slower for trailing effect
-            ringX += (targetX - ringX) * 0.08;
-            ringY += (targetY - ringY) * 0.08;
-            ring.style.left = ringX + 'px';
-            ring.style.top = ringY + 'px';
-
-            // Smooth mouse for other effects
-            mouse.smoothX += (mouse.x - mouse.smoothX) * 0.06;
-            mouse.smoothY += (mouse.y - mouse.smoothY) * 0.06;
-
-            // Trail — spawn a small fading particle every 3rd frame
-            trailCounter++;
-            if (trailCounter % 3 === 0) {
-                const trail = document.createElement('div');
-                trail.className = 'cursor-trail';
-                trail.style.left = dotX + 'px';
-                trail.style.top = dotY + 'px';
-                document.body.appendChild(trail);
-                setTimeout(() => trail.remove(), 600);
-            }
-
-            requestAnimationFrame(animateCursor);
-        }
-        animateCursor();
-    }
-
-    // ============================================================
     // PARTICLE SYSTEM (Canvas)
     // ============================================================
-    const canvas = document.getElementById('particleCanvas');
-    const ctx = canvas.getContext('2d');
-    let particles = [];
-    let lightStreaks = [];
-    const PARTICLE_COUNT = isMobile ? 40 : 100;
-    const CONNECTION_DISTANCE = 140;
-    const STREAK_INTERVAL = 4000;
 
-    function resizeCanvas() {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
+    // TECH NODES BACKGROUND
+    const nodesCanvas = document.getElementById('bgNodesCanvas');
+    const nodesCtx = nodesCanvas.getContext('2d');
+    let nodes = [];
+    const NODE_COUNT = isMobile ? 25 : 60;
+    const GRID_SIZE = 60;
+
+    function resizeNodesCanvas() {
+        nodesCanvas.width = window.innerWidth;
+        nodesCanvas.height = window.innerHeight;
     }
-    resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
+    resizeNodesCanvas();
+    window.addEventListener('resize', resizeNodesCanvas);
 
-    class Particle {
+    class TechNode {
         constructor() {
-            this.reset();
+            this.init();
         }
-        reset() {
-            this.x = Math.random() * canvas.width;
-            this.y = Math.random() * canvas.height;
-            this.vx = (Math.random() - 0.5) * 0.3;
-            this.vy = (Math.random() - 0.5) * 0.3;
-            this.radius = Math.random() * 2 + 0.5;
-            this.opacity = Math.random() * 0.4 + 0.1;
+        init() {
+            // Bias position towards grid intersections
+            const gx = Math.round(Math.random() * (nodesCanvas.width / GRID_SIZE)) * GRID_SIZE;
+            const gy = Math.round(Math.random() * (nodesCanvas.height / GRID_SIZE)) * GRID_SIZE;
+            
+            this.anchorX = gx + (Math.random() - 0.5) * 10;
+            this.anchorY = gy + (Math.random() - 0.5) * 10;
+            this.x = this.anchorX;
+            this.y = this.anchorY;
+            
+            this.vx = (Math.random() - 0.5) * 0.1;
+            this.vy = (Math.random() - 0.5) * 0.1;
+            
+            this.radius = Math.random() < 0.8 ? Math.random() * 1.5 + 0.5 : Math.random() * 2 + 1.5;
+            this.baseOpacity = Math.random() * 0.3 + 0.1;
+            this.opacity = this.baseOpacity;
+            
+            // Randomly pick a color: soft white, light grey, or accent colors
             const colors = [
-                'rgba(46, 204, 113,',
-                'rgba(0, 212, 255,',
-                'rgba(255, 45, 123,',
-                'rgba(200, 200, 220,'
+                'rgba(255, 255, 255,',   // soft white
+                'rgba(152, 152, 166,',   // light grey (var(--text-secondary))
+                'rgba(163, 207, 62,',    // accent lime (matches logo)
+                'rgba(163, 207, 62,'      // accent lime (matches logo)
             ];
-            this.color = colors[Math.floor(Math.random() * colors.length)];
-        }
-        update() {
-            this.x += this.vx;
-            this.y += this.vy;
-
-            // Slight attraction toward mouse (desktop only)
-            if (!isMobile) {
-                const dx = mouse.smoothX - this.x;
-                const dy = mouse.smoothY - this.y;
-                const dist = Math.sqrt(dx * dx + dy * dy);
-                if (dist < 300) {
-                    this.vx += dx * 0.00003;
-                    this.vy += dy * 0.00003;
-                }
+            const colorWeights = [0.5, 0.3, 0.1, 0.1];
+            let r = Math.random();
+            let colorIdx = 0;
+            for(let i=0; i<colorWeights.length; i++) {
+                r -= colorWeights[i];
+                if(r <= 0) { colorIdx = i; break; }
             }
+            this.color = colors[colorIdx];
+            
+            this.pulse = Math.random() * Math.PI * 2;
+            this.pulseSpeed = 0.02 + Math.random() * 0.03;
+            this.floatOffset = Math.random() * Math.PI * 2;
+            
+            // Some nodes are blurred for depth
+            this.blur = Math.random() < 0.3 ? Math.random() * 2 : 0;
+            this.brightness = Math.random() < 0.2 ? 1.5 : 1;
+        }
 
-            // Damping
-            this.vx *= 0.999;
-            this.vy *= 0.999;
+        update() {
+            // Floating motion
+            this.floatOffset += 0.005;
+            this.x = this.anchorX + Math.sin(this.floatOffset) * 15;
+            this.y = this.anchorY + Math.cos(this.floatOffset * 0.8) * 15;
+
+            // Simple drift of anchor
+            this.anchorX += this.vx;
+            this.anchorY += this.vy;
 
             // Wrap
-            if (this.x < -10) this.x = canvas.width + 10;
-            if (this.x > canvas.width + 10) this.x = -10;
-            if (this.y < -10) this.y = canvas.height + 10;
-            if (this.y > canvas.height + 10) this.y = -10;
-        }
-        draw() {
-            ctx.beginPath();
-            ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-            ctx.fillStyle = this.color + this.opacity + ')';
-            ctx.fill();
-        }
-    }
+            if (this.anchorX < -50) this.anchorX = nodesCanvas.width + 50;
+            if (this.anchorX > nodesCanvas.width + 50) this.anchorX = -50;
+            if (this.anchorY < -50) this.anchorY = nodesCanvas.height + 50;
+            if (this.anchorY > nodesCanvas.height + 50) this.anchorY = -50;
 
-    class LightStreak {
-        constructor() {
-            this.reset();
-        }
-        reset() {
-            this.x = -100;
-            this.y = Math.random() * canvas.height * 0.7;
-            this.length = Math.random() * 200 + 100;
-            this.speed = Math.random() * 4 + 2;
-            this.opacity = Math.random() * 0.08 + 0.02;
-            this.angle = (Math.random() - 0.5) * 0.2;
-            this.active = true;
-        }
-        update() {
-            this.x += this.speed;
-            this.y += Math.sin(this.angle) * 0.5;
-            if (this.x > canvas.width + this.length) {
-                this.active = false;
+            // Pulsing & Fading
+            this.pulse += this.pulseSpeed;
+            this.opacity = this.baseOpacity + Math.sin(this.pulse) * 0.1;
+
+            // Mouse Interaction (subtle repulsion)
+            const dx = mouse.smoothX - this.x;
+            const dy = mouse.smoothY - this.y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < 150) {
+                const force = (150 - dist) / 150;
+                this.anchorX -= (dx / dist) * force * 1.5;
+                this.anchorY -= (dy / dist) * force * 1.5;
             }
         }
+
         draw() {
-            const endX = this.x - Math.cos(this.angle) * this.length;
-            const endY = this.y - Math.sin(this.angle) * this.length;
-            const gradient = ctx.createLinearGradient(this.x, this.y, endX, endY);
-            gradient.addColorStop(0, `rgba(46, 204, 113, ${this.opacity})`);
-            gradient.addColorStop(1, 'rgba(46, 204, 113, 0)');
-            ctx.beginPath();
-            ctx.moveTo(this.x, this.y);
-            ctx.lineTo(endX, endY);
-            ctx.strokeStyle = gradient;
-            ctx.lineWidth = 1;
-            ctx.stroke();
+            nodesCtx.save();
+            if (this.blur > 0) nodesCtx.filter = `blur(${this.blur}px)`;
+            
+            nodesCtx.beginPath();
+            nodesCtx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+            nodesCtx.fillStyle = this.color + (this.opacity * this.brightness) + ')';
+            
+            // Soft glow
+            nodesCtx.shadowColor = this.color + '0.5)';
+            nodesCtx.shadowBlur = 5 * this.opacity;
+            
+            nodesCtx.fill();
+            nodesCtx.restore();
         }
     }
 
-    // Init particles
-    for (let i = 0; i < PARTICLE_COUNT; i++) {
-        particles.push(new Particle());
-    }
-
-    // Spawn light streaks periodically
-    setInterval(() => {
-        if (lightStreaks.length < 3) {
-            lightStreaks.push(new LightStreak());
-        }
-    }, STREAK_INTERVAL);
-
-    function drawConnections() {
-        for (let i = 0; i < particles.length; i++) {
-            for (let j = i + 1; j < particles.length; j++) {
-                const dx = particles[i].x - particles[j].x;
-                const dy = particles[i].y - particles[j].y;
-                const dist = Math.sqrt(dx * dx + dy * dy);
-                if (dist < CONNECTION_DISTANCE) {
-                    const alpha = (1 - dist / CONNECTION_DISTANCE) * 0.08;
-                    ctx.beginPath();
-                    ctx.moveTo(particles[i].x, particles[i].y);
-                    ctx.lineTo(particles[j].x, particles[j].y);
-                    ctx.strokeStyle = `rgba(200, 200, 220, ${alpha})`;
-                    ctx.lineWidth = 0.5;
-                    ctx.stroke();
-                }
-            }
+    function initNodes() {
+        nodes = [];
+        for (let i = 0; i < NODE_COUNT; i++) {
+            nodes.push(new TechNode());
         }
     }
+    initNodes();
 
-    function animateParticles() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-        // Particles
-        particles.forEach(p => {
-            p.update();
-            p.draw();
+    function animateNodes() {
+        nodesCtx.clearRect(0, 0, nodesCanvas.width, nodesCanvas.height);
+        nodes.forEach(node => {
+            node.update();
+            node.draw();
         });
-
-        // Connections
-        if (!isMobile) drawConnections();
-
-        // Light streaks
-        lightStreaks = lightStreaks.filter(s => s.active);
-        lightStreaks.forEach(s => {
-            s.update();
-            s.draw();
-        });
-
-        requestAnimationFrame(animateParticles);
+        requestAnimationFrame(animateNodes);
     }
-    animateParticles();
+    animateNodes();
+
 
     // ============================================================
     // HERO PANEL — 3D TILT ON MOUSE
@@ -494,86 +368,8 @@
     `;
     document.head.appendChild(rippleStyle);
 
-    // ============================================================
-    // AMBIENT SOUND (Web Audio API)
-    // ============================================================
-    let audioCtx = null;
-    let soundEnabled = false;
-    let oscillators = [];
 
-    const soundToggle = document.getElementById('soundToggle');
-    const soundOff = soundToggle.querySelector('.sound-off');
-    const soundOn = soundToggle.querySelector('.sound-on');
 
-    function createAmbientSound() {
-        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-
-        // Deep hum
-        const osc1 = audioCtx.createOscillator();
-        const gain1 = audioCtx.createGain();
-        osc1.type = 'sine';
-        osc1.frequency.value = 60;
-        gain1.gain.value = 0.015;
-        osc1.connect(gain1).connect(audioCtx.destination);
-        osc1.start();
-
-        // Sub-harmonic
-        const osc2 = audioCtx.createOscillator();
-        const gain2 = audioCtx.createGain();
-        osc2.type = 'sine';
-        osc2.frequency.value = 90;
-        gain2.gain.value = 0.008;
-        osc2.connect(gain2).connect(audioCtx.destination);
-        osc2.start();
-
-        // High shimmer
-        const osc3 = audioCtx.createOscillator();
-        const gain3 = audioCtx.createGain();
-        osc3.type = 'sine';
-        osc3.frequency.value = 440;
-        gain3.gain.value = 0.003;
-        osc3.connect(gain3).connect(audioCtx.destination);
-        osc3.start();
-
-        // Slow LFO on shimmer volume
-        const lfo = audioCtx.createOscillator();
-        const lfoGain = audioCtx.createGain();
-        lfo.type = 'sine';
-        lfo.frequency.value = 0.15;
-        lfoGain.gain.value = 0.002;
-        lfo.connect(lfoGain).connect(gain3.gain);
-        lfo.start();
-
-        oscillators = [osc1, osc2, osc3, lfo];
-    }
-
-    soundToggle.addEventListener('click', () => {
-        soundEnabled = !soundEnabled;
-        if (soundEnabled) {
-            if (!audioCtx) createAmbientSound();
-            else audioCtx.resume();
-            soundOff.style.display = 'none';
-            soundOn.style.display = 'block';
-        } else {
-            if (audioCtx) audioCtx.suspend();
-            soundOff.style.display = 'block';
-            soundOn.style.display = 'none';
-        }
-    });
-
-    // ============================================================
-    // HERO TITLE — GRADIENT CLASS
-    // ============================================================
-    // Apply gradient to "Websites" after typewriter animation
-    setTimeout(() => {
-        const accentLine = document.querySelector('.title-accent');
-        if (accentLine) {
-            accentLine.style.backgroundImage = 'linear-gradient(135deg, #2ECC71, #00D4FF)';
-            accentLine.style.webkitBackgroundClip = 'text';
-            accentLine.style.webkitTextFillColor = 'transparent';
-            accentLine.style.backgroundClip = 'text';
-        }
-    }, 2500);
 
     // ============================================================
     // SCROLL INDICATOR FADE

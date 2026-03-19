@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Iron Pulse — Premium Fitness Studio. Build your strongest body with elite training and expert coaching.">
+    <title>IRON PULSE | Premium Fitness Studio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="favicon.png">
+    <style>
+        :root {
+            --primary: #000000;
+            --secondary: #1A1A1A;
+            --accent: #A3CF3E; /* Brand Lime Green */
+            --text: #FFFFFF;
+            --text-dim: #A0A0A0;
+            --card-bg: #111111;
+            --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--primary);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Space+Grotesk', sans-serif;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: -0.02em;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: var(--transition);
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .section-padding {
+            padding: 8rem 0;
+        }
+
+        /* --- Components --- */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 1rem 2.5rem;
+            border-radius: 4px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .btn-primary {
+            background-color: var(--accent);
+            color: var(--primary);
+            border: 2px solid var(--accent);
+        }
+
+        .btn-primary:hover {
+            background-color: transparent;
+            color: var(--accent);
+            box-shadow: 0 0 20px rgba(223, 255, 0, 0.4);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: var(--text);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .text-accent {
+            color: var(--accent);
+        }
+
+        /* --- Navigation --- */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1.5rem 0;
+            z-index: 1000;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .nav-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo span {
+            color: var(--accent);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+        }
+
+        .nav-link {
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .nav-link:hover {
+            color: var(--accent);
+        }
+
+        /* --- Hero --- */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(to right, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4)), url('portfolio_gym.png');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 800px;
+        }
+
+        .hero-tag {
+            color: var(--accent);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            display: block;
+            margin-bottom: 1rem;
+        }
+
+        .hero-title {
+            font-size: clamp(3rem, 8vw, 6rem);
+            line-height: 1;
+            margin-bottom: 2rem;
+        }
+
+        .hero-desc {
+            font-size: 1.2rem;
+            color: var(--text-dim);
+            margin-bottom: 3rem;
+            max-width: 600px;
+        }
+
+        /* --- Stats --- */
+        .stats {
+            background-color: var(--card-bg);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 4rem 0;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            text-align: center;
+        }
+
+        .stat-item h3 {
+            font-size: 3rem;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-item p {
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            color: var(--text-dim);
+        }
+
+        /* --- Programs --- */
+        .section-header {
+            text-align: center;
+            margin-bottom: 5rem;
+        }
+
+        .section-header h2 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .section-header p {
+            color: var(--text-dim);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .programs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .program-card {
+            background-color: var(--card-bg);
+            padding: 3rem 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .program-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent);
+        }
+
+        .program-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .program-card p {
+            color: var(--text-dim);
+            margin-bottom: 2rem;
+        }
+
+        .program-link {
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* --- Pricing --- */
+        .pricing {
+            background-color: #080808;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .price-card {
+            background-color: var(--card-bg);
+            padding: 4rem 3rem;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        .price-card.popular {
+            border-color: var(--accent);
+            position: relative;
+        }
+
+        .popular-tag {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            background-color: var(--accent);
+            color: var(--primary);
+            padding: 0.3rem 0.8rem;
+            font-size: 0.7rem;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        .price-card h4 {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-dim);
+        }
+
+        .price-card .price {
+            font-size: 4rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            font-family: 'Space+Grotesk', sans-serif;
+        }
+
+        .price-card .price span {
+            font-size: 1rem;
+            color: var(--text-dim);
+        }
+
+        .pricing-list {
+            text-align: left;
+            margin-bottom: 3rem;
+        }
+
+        .pricing-list li {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            color: var(--text-dim);
+        }
+
+        .pricing-list li::before {
+            content: "✓";
+            color: var(--accent);
+            font-weight: 900;
+        }
+
+        /* --- Footer --- */
+        footer {
+            background-color: var(--primary);
+            padding: 6rem 0 3rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 4rem;
+            margin-bottom: 4rem;
+        }
+
+        .footer-col h4 {
+            margin-bottom: 2rem;
+            font-size: 1rem;
+        }
+
+        .footer-links li {
+            margin-bottom: 1rem;
+        }
+
+        .footer-links a {
+            color: var(--text-dim);
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+
+        .footer-bottom {
+            padding-top: 3rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.8rem;
+            color: var(--text-dim);
+        }
+
+        @media (max-width: 900px) {
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .nav-links {
+                display: none;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+            .hero-title {
+                font-size: 3.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="container nav-inner">
+            <a href="#" class="logo">IRON<span>PULSE</span></a>
+            <ul class="nav-links">
+                <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#programs" class="nav-link">Programs</a></li>
+                <li><a href="#membership" class="nav-link">Membership</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+            </ul>
+            <a href="#membership" class="btn btn-primary" style="padding: 0.6rem 1.5rem; font-size: 0.8rem;">Join Now</a>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <span class="hero-tag">Welcome to Iron Pulse</span>
+                <h1 class="hero-title">Forge Your<br><span class="text-accent">Elite Body</span></h1>
+                <p class="hero-desc">Push your limits with world-class training programs, state-of-the-art equipment, and a community dedicated to the art of transformation.</p>
+                <div class="hero-btns">
+                    <a href="#membership" class="btn btn-primary">Start Training</a>
+                    <a href="#programs" class="btn btn-outline" style="margin-left: 1.5rem;">Our Programs</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="stats">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <h3>2K+</h3>
+                    <p>Active Members</p>
+                </div>
+                <div class="stat-item">
+                    <h3>50+</h3>
+                    <p>Expert Coaches</p>
+                </div>
+                <div class="stat-item">
+                    <h3>8+</h3>
+                    <p>Years Experience</p>
+                </div>
+                <div class="stat-item">
+                    <h3>12</h3>
+                    <p>Locations</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="programs" class="section-padding">
+        <div class="container">
+            <div class="section-header">
+                <h2>Our <span class="text-accent">Programs</span></h2>
+                <p>Designed for every level, from beginners to professional athletes.</p>
+            </div>
+            <div class="programs-grid">
+                <div class="program-card">
+                    <h3>Weight Training</h3>
+                    <p>Build explosive strength and muscle mass with our curated powerlifting and hypertrophy sessions.</p>
+                    <a href="#" class="program-link">Learn More <span>→</span></a>
+                </div>
+                <div class="program-card">
+                    <h3>Personal Training</h3>
+                    <p>Get one-on-one attention from elite coaches to reach your specific goals faster and safer.</p>
+                    <a href="#" class="program-link">Learn More <span>→</span></a>
+                </div>
+                <div class="program-card">
+                    <h3>HIIT & Conditioning</h3>
+                    <p>Burn fat and improve endurance with high-intensity interval training that pushes your limits.</p>
+                    <a href="#" class="program-link">Learn More <span>→</span></a>
+                </div>
+                <div class="program-card">
+                    <h3>Body Transformation</h3>
+                    <p>A comprehensive 12-week program combining nutrition, training, and mindset coaching.</p>
+                    <a href="#" class="program-link">Learn More <span>→</span></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="membership" class="section-padding pricing">
+        <div class="container">
+            <div class="section-header">
+                <h2>Membership <span class="text-accent">Plans</span></h2>
+                <p>Choose the level of access that works best for your fitness journey.</p>
+            </div>
+            <div class="pricing-grid">
+                <div class="price-card">
+                    <h4>Basic</h4>
+                    <div class="price">$49<span>/mo</span></div>
+                    <ul class="pricing-list">
+                        <li>Standard Gym Access</li>
+                        <li>Locker Room & Showers</li>
+                        <li>Free Fitness Assessment</li>
+                        <li>1 Class Per Month</li>
+                    </ul>
+                    <a href="#" class="btn btn-outline" style="width: 100%;">Select Plan</a>
+                </div>
+                <div class="price-card popular">
+                    <span class="popular-tag">Most Popular</span>
+                    <h4>Pro</h4>
+                    <div class="price">$89<span>/mo</span></div>
+                    <ul class="pricing-list">
+                        <li>24/7 Unlimited Access</li>
+                        <li>Unlimited Group Classes</li>
+                        <li>Sauna & Recovery Zone</li>
+                        <li>Nutrition Planning</li>
+                    </ul>
+                    <a href="#" class="btn btn-primary" style="width: 100%;">Select Plan</a>
+                </div>
+                <div class="price-card">
+                    <h4>Elite</h4>
+                    <div class="price">$149<span>/mo</span></div>
+                    <ul class="pricing-list">
+                        <li>All Pro Features</li>
+                        <li>Personal Trainer Sessions</li>
+                        <li>Priority Booking</li>
+                        <li>Iron Pulse Apparel Kit</li>
+                    </ul>
+                    <a href="#" class="btn btn-outline" style="width: 100%;">Select Plan</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <a href="#" class="logo" style="margin-bottom: 1.5rem;">IRON<span>PULSE</span></a>
+                    <p style="color: var(--text-dim); font-size: 0.9rem;">The ultimate destination for premium fitness and performance. Join the pulse today.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#programs">Programs</a></li>
+                        <li><a href="#membership">Join Iron Pulse</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Legal</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Cookie Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact</h4>
+                    <ul class="footer-links">
+                        <li><a href="mailto:contact@ironpulse.com">contact@ironpulse.com</a></li>
+                        <li><a href="#">123 Iron St, New York</a></li>
+                        <li><a href="#">+1 234 567 890</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Iron Pulse Premium Fitness. All rights reserved.</p>
+                <div class="socials">
+                    <a href="#" style="margin-right: 1rem;">Instagram</a>
+                    <a href="#" style="margin-right: 1rem;">Twitter</a>
+                    <a href="#">Facebook</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
