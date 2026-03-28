@@ -382,12 +382,109 @@
             color: var(--text-dim);
         }
 
+        /* --- Mobile Menu Toggle (gym-specific) --- */
+        .gym-menu-toggle {
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .gym-menu-toggle .bar {
+            display: block;
+            width: 20px;
+            height: 2px;
+            background: #fff;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .gym-menu-toggle .bar + .bar {
+            margin-top: 5px;
+        }
+
+        .gym-menu-toggle.active .bar:nth-child(1) {
+            transform: translateY(7px) rotate(45deg);
+            background: var(--accent);
+        }
+
+        .gym-menu-toggle.active .bar:nth-child(2) {
+            opacity: 0;
+        }
+
+        .gym-menu-toggle.active .bar:nth-child(3) {
+            transform: translateY(-7px) rotate(-45deg);
+            background: var(--accent);
+        }
+
+        .gym-nav-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+
+        .gym-nav-overlay.active {
+            display: block;
+        }
+
         @media (max-width: 900px) {
+            .gym-menu-toggle {
+                display: flex;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: 0;
+                width: 260px;
+                height: 100vh;
+                height: 100dvh;
+                flex-direction: column;
+                padding: 90px 32px 40px;
+                gap: 8px;
+                background: rgba(0, 0, 0, 0.97);
+                backdrop-filter: blur(20px);
+                border-left: 1px solid rgba(255, 255, 255, 0.06);
+                transform: translateX(100%);
+                transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+                z-index: 1000;
+            }
+
+            .nav-links.gym-open {
+                transform: translateX(0);
+            }
+
+            .nav-links li {
+                border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            }
+
+            .nav-link {
+                font-size: 1rem;
+                padding: 12px 0;
+                display: block;
+            }
+
             .footer-grid {
                 grid-template-columns: 1fr 1fr;
             }
-            .nav-links {
-                display: none;
+
+            .hero-btns {
+                display: flex;
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .hero-btns .btn-outline {
+                margin-left: 0 !important;
             }
         }
 
@@ -395,9 +492,44 @@
             .footer-grid {
                 grid-template-columns: 1fr;
             }
+
             .hero-title {
-                font-size: 3.5rem;
+                font-size: clamp(2rem, 9vw, 3.5rem);
             }
+
+            .hero-desc {
+                font-size: 1rem;
+            }
+
+            .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .price-card {
+                padding: 3rem 2rem;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .section-header h2 {
+                font-size: 2rem;
+            }
+
+            .section-padding {
+                padding: 5rem 0;
+            }
+        }
+
+        body.gym-menu-open {
+            overflow: hidden;
         }
     </style>
 </head>
@@ -406,13 +538,19 @@
     <nav>
         <div class="container nav-inner">
             <a href="#" class="logo">IRON<span>PULSE</span></a>
-            <ul class="nav-links">
+            <ul class="nav-links" id="gymNavLinks">
                 <li><a href="#about" class="nav-link">About</a></li>
                 <li><a href="#programs" class="nav-link">Programs</a></li>
                 <li><a href="#membership" class="nav-link">Membership</a></li>
                 <li><a href="#contact" class="nav-link">Contact</a></li>
             </ul>
             <a href="#membership" class="btn btn-primary" style="padding: 0.6rem 1.5rem; font-size: 0.8rem;">Join Now</a>
+            <button class="gym-menu-toggle" id="gymMenuToggle" aria-label="Toggle menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+            <div class="gym-nav-overlay" id="gymNavOverlay"></div>
         </div>
     </nav>
 
@@ -471,7 +609,7 @@
                     <a href="#" class="program-link">Learn More <span>→</span></a>
                 </div>
                 <div class="program-card">
-                    <h3>HIIT & Conditioning</h3>
+                    <h3>HIIT &amp; Conditioning</h3>
                     <p>Burn fat and improve endurance with high-intensity interval training that pushes your limits.</p>
                     <a href="#" class="program-link">Learn More <span>→</span></a>
                 </div>
@@ -496,7 +634,7 @@
                     <div class="price">$49<span>/mo</span></div>
                     <ul class="pricing-list">
                         <li>Standard Gym Access</li>
-                        <li>Locker Room & Showers</li>
+                        <li>Locker Room &amp; Showers</li>
                         <li>Free Fitness Assessment</li>
                         <li>1 Class Per Month</li>
                     </ul>
@@ -509,7 +647,7 @@
                     <ul class="pricing-list">
                         <li>24/7 Unlimited Access</li>
                         <li>Unlimited Group Classes</li>
-                        <li>Sauna & Recovery Zone</li>
+                        <li>Sauna &amp; Recovery Zone</li>
                         <li>Nutrition Planning</li>
                     </ul>
                     <a href="#" class="btn btn-primary" style="width: 100%;">Select Plan</a>
@@ -571,6 +709,45 @@
             </div>
         </div>
     </footer>
+
+    <script>
+        // Gym page hamburger menu
+        (function() {
+            const toggle = document.getElementById('gymMenuToggle');
+            const navLinks = document.getElementById('gymNavLinks');
+            const overlay = document.getElementById('gymNavOverlay');
+
+            if (toggle && navLinks) {
+                function openMenu() {
+                    toggle.classList.add('active');
+                    navLinks.classList.add('gym-open');
+                    if (overlay) overlay.classList.add('active');
+                    document.body.classList.add('gym-menu-open');
+                }
+
+                function closeMenu() {
+                    toggle.classList.remove('active');
+                    navLinks.classList.remove('gym-open');
+                    if (overlay) overlay.classList.remove('active');
+                    document.body.classList.remove('gym-menu-open');
+                }
+
+                toggle.addEventListener('click', function() {
+                    navLinks.classList.contains('gym-open') ? closeMenu() : openMenu();
+                });
+
+                if (overlay) overlay.addEventListener('click', closeMenu);
+
+                navLinks.querySelectorAll('.nav-link').forEach(link => {
+                    link.addEventListener('click', closeMenu);
+                });
+
+                window.addEventListener('resize', function() {
+                    if (window.innerWidth > 900) closeMenu();
+                });
+            }
+        })();
+    </script>
 
 </body>
 </html>

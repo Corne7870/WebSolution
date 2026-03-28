@@ -68,18 +68,25 @@
     <!-- ============ NAVIGATION ============ -->
     <nav class="top-nav" id="topNav">
         <a href="index.html" class="nav-logo"><img src="logo 2.png" alt="Web Solution" class="nav-logo-img"></a>
-        <div class="nav-links">
+        <div class="nav-links" id="navLinks">
         <a href="#hero" class="nav-link">Home</a>
-        <a href="#services" class="nav-link">Services</a>
+        <a href="services.html" class="nav-link">Services</a>
         <a href="#about" class="nav-link">About</a>
         <a href="#work" class="nav-link">Work</a>
         <a href="contact.html" class="nav-link">Contact</a>
         </div>
-        <div class="nav-founders">
+        <div class="nav-founders" id="navFounders">
             <a href="corne.html" class="founder-link">Corné Venter</a>
             <span class="founder-sep">•</span>
             <a href="jg.html" class="founder-link">JG Coomans</a>
         </div>
+        <a href="contact.html#bookCall" class="btn btn-primary nav-cta-btn">Book a Call</a>
+        <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </button>
+        <div class="mobile-nav-overlay" id="mobileNavOverlay"></div>
     </nav>
 
     <!-- ============ HERO SECTION ============ -->
@@ -122,86 +129,12 @@
             <h2 class="section-title">Solutions That <span class="text-accent">Grow Your Business</span></h2>
             <p class="section-sub">From online stores to corporate platforms — we build professional websites tailored to your goals and designed to deliver results.</p>
         </div>
-        <div class="services-grid">
-            <!-- 01 E-Commerce -->
-            <div class="float-card service-card reveal-item" data-tilt data-color="green">
-                <div class="card-number">01</div>
-                <div class="card-icon">
-                    <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 6h4l6 24h20l4-14H16"/><circle cx="20" cy="38" r="3"/><circle cx="34" cy="38" r="3"/></svg>
-                </div>
-                <h3>E-Commerce Websites</h3>
-                <p>Professional online stores with product showcases, secure checkout, and optimised shopping experiences that drive sales.</p>
-                <div class="card-glow"></div>
-            </div>
-            <!-- 02 Business -->
-            <div class="float-card service-card reveal-item" data-tilt data-color="blue">
-                <div class="card-number">02</div>
-                <div class="card-icon">
-                    <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="6" y="14" width="36" height="24" rx="3"/><path d="M16 14V10a8 8 0 0 1 16 0v4"/><line x1="24" y1="24" x2="24" y2="28"/></svg>
-                </div>
-                <h3>Business Websites</h3>
-                <p>Polished company websites with service pages, team profiles, and a premium feel that builds instant credibility.</p>
-                <div class="card-glow"></div>
-            </div>
-            <!-- 03 Landing Pages -->
-            <div class="float-card service-card reveal-item" data-tilt data-color="pink">
-                <div class="card-number">03</div>
-                <div class="card-icon">
-                    <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 8h32v32H8z" rx="4"/><path d="M8 18h32"/><path d="M16 28h16"/><path d="M20 34h8"/></svg>
-                </div>
-                <h3>Landing Pages That Convert</h3>
-                <p>High-converting marketing pages focused on a single goal — capture leads, drive sign-ups, and grow your customer base.</p>
-                <div class="card-glow"></div>
-            </div>
-            <!-- 04 Portfolio -->
-            <div class="float-card service-card reveal-item" data-tilt data-color="green">
-                <div class="card-number">04</div>
-                <div class="card-icon">
-                    <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="6" y="6" width="15" height="15" rx="2"/><rect x="27" y="6" width="15" height="15" rx="2"/><rect x="6" y="27" width="15" height="15" rx="2"/><rect x="27" y="27" width="15" height="15" rx="2"/></svg>
-                </div>
-                <h3>Professional Portfolio Websites</h3>
-                <p>Showcase your best work with elegant galleries, clean layouts, and a professional presentation that wins clients.</p>
-                <div class="card-glow"></div>
-            </div>
-            <!-- 05 Booking -->
-            <div class="float-card service-card reveal-item" data-tilt data-color="blue">
-                <div class="card-number">05</div>
-                <div class="card-icon">
-                    <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="6" y="10" width="36" height="30" rx="3"/><line x1="6" y1="20" x2="42" y2="20"/><line x1="16" y1="6" x2="16" y2="14"/><line x1="32" y1="6" x2="32" y2="14"/><circle cx="24" cy="30" r="4"/></svg>
-                </div>
-                <h3>Booking & Appointments</h3>
-                <p>Seamless scheduling for salons, consultants, and services — fully integrated with calendars and payments.</p>
-                <div class="card-glow"></div>
-            </div>
-            <!-- 06 Educational -->
-            <div class="float-card service-card reveal-item" data-tilt data-color="pink">
-                <div class="card-number">06</div>
-                <div class="card-icon">
-                    <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M24 6L4 18l20 12 20-12L24 6z"/><path d="M10 22v12c0 0 6 8 14 8s14-8 14-8V22"/><line x1="40" y1="18" x2="40" y2="36"/></svg>
-                </div>
-                <h3>Educational Platforms</h3>
-                <p>Course portals, eBook stores, and learning hubs with progress tracking and professional content delivery.</p>
-                <div class="card-glow"></div>
-            </div>
-            <!-- 07 Membership -->
-            <div class="float-card service-card reveal-item" data-tilt data-color="green">
-                <div class="card-number">07</div>
-                <div class="card-icon">
-                    <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="24" cy="16" r="10"/><path d="M8 42c0-8.8 7.2-16 16-16s16 7.2 16 16"/><path d="M30 14l2 4 4 1-3 3 1 4-4-2-4 2 1-4-3-3 4-1z"/></svg>
-                </div>
-                <h3>Membership Websites</h3>
-                <p>Gated content, subscription tiers, and exclusive member areas that create recurring value and revenue.</p>
-                <div class="card-glow"></div>
-            </div>
-            <!-- 08 Custom Apps -->
-            <div class="float-card service-card reveal-item" data-tilt data-color="blue">
-                <div class="card-number">08</div>
-                <div class="card-icon">
-                    <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="6" y="6" width="36" height="36" rx="4"/><circle cx="18" cy="18" r="4"/><circle cx="30" cy="18" r="4"/><circle cx="18" cy="30" r="4"/><path d="M30 26v8"/><path d="M26 30h8"/></svg>
-                </div>
-                <h3>Custom Web Applications</h3>
-                <p>Advanced dashboards, client portals, and bespoke tools — powerful functionality with an intuitive, polished interface.</p>
-                <div class="card-glow"></div>
+        <div style="text-align: center; margin-top: 40px;" class="reveal-item">
+            <a href="services.html" class="btn btn-primary btn-lg">
+                <span>View All Services</span>
+                <span class="btn-glow"></span>
+            </a>
+        </div>
             </div>
         </div>
     </section>
@@ -308,7 +241,7 @@
                 <div class="footer-col">
                     <h4>Navigate</h4>
                     <a href="#hero">Home</a>
-                    <a href="#services">Services</a>
+                    <a href="services.html">Services</a>
                     <a href="#about">About</a>
                     <a href="#work">Work</a>
                 </div>
@@ -318,6 +251,11 @@
                     <a href="#">Twitter / X</a>
                     <a href="#">LinkedIn</a>
                     <a href="#">Dribbble</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Legal</h4>
+                    <a href="terms.html">Terms & Conditions</a>
+                    <a href="privacy.html">Privacy Policy</a>
                 </div>
             </div>
         </div>

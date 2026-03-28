@@ -400,4 +400,61 @@
     }
     animateFloatingPanels();
 
+    // ============================================================
+    // MOBILE HAMBURGER MENU
+    // ============================================================
+    const mobileToggle = document.getElementById('mobileMenuToggle');
+    const navLinksEl = document.getElementById('navLinks');
+    const navFoundersEl = document.getElementById('navFounders');
+    const mobileOverlay = document.getElementById('mobileNavOverlay');
+
+    if (mobileToggle && navLinksEl) {
+        function openMobileMenu() {
+            mobileToggle.classList.add('active');
+            navLinksEl.classList.add('mobile-open');
+            if (navFoundersEl) navFoundersEl.classList.add('mobile-open');
+            if (mobileOverlay) mobileOverlay.classList.add('active');
+            document.body.classList.add('menu-open');
+        }
+
+        function closeMobileMenu() {
+            mobileToggle.classList.remove('active');
+            navLinksEl.classList.remove('mobile-open');
+            if (navFoundersEl) navFoundersEl.classList.remove('mobile-open');
+            if (mobileOverlay) mobileOverlay.classList.remove('active');
+            document.body.classList.remove('menu-open');
+        }
+
+        mobileToggle.addEventListener('click', function () {
+            if (navLinksEl.classList.contains('mobile-open')) {
+                closeMobileMenu();
+            } else {
+                openMobileMenu();
+            }
+        });
+
+        // Close on overlay click
+        if (mobileOverlay) {
+            mobileOverlay.addEventListener('click', closeMobileMenu);
+        }
+
+        // Close on nav link click
+        navLinksEl.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', closeMobileMenu);
+        });
+
+        if (navFoundersEl) {
+            navFoundersEl.querySelectorAll('.founder-link').forEach(link => {
+                link.addEventListener('click', closeMobileMenu);
+            });
+        }
+
+        // Close on resize past breakpoint
+        window.addEventListener('resize', function () {
+            if (window.innerWidth > 768) {
+                closeMobileMenu();
+            }
+        });
+    }
+
 })();
