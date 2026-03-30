@@ -1054,33 +1054,69 @@ img {
    ============================================================ */
 .portfolio-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-auto-rows: minmax(320px, auto);
-    grid-auto-flow: dense;
-    gap: 30px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 80px 40px;
     max-width: var(--container-width);
     margin: 0 auto;
 }
 
-.portfolio-card {
-    position: relative;
-    border-radius: 24px;
-    overflow: hidden;
-    background: var(--bg-card);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    transform-style: preserve-3d;
+.portfolio-project-card {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    text-decoration: none;
     transition: all 0.6s var(--ease-out-expo);
-    height: 100%;
 }
 
-.portfolio-card-lg {
-    grid-column: span 2;
-    grid-row: span 1;
+.portfolio-project-card:hover {
+    transform: translateY(-5px);
 }
 
-.portfolio-card-full {
-    grid-column: span 3;
-    min-height: 400px;
+/* --- Laptop Mockup (CSS Frame) --- */
+.laptop-mockup {
+    position: relative;
+    width: 100%;
+    margin: 0 auto;
+    background: #18181b;
+    border-radius: 12px 12px 0 0;
+    padding: 18px 18px 24px 18px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: none;
+    box-shadow: 
+        0 20px 40px rgba(0, 0, 0, 0.6),
+        inset 0 1px 1px rgba(255, 255, 255, 0.05);
+    transform-style: preserve-3d;
+    transition: transform 0.6s var(--ease-out-expo), box-shadow 0.6s var(--ease-out-expo), border-color 0.6s var(--ease-out-expo);
+}
+
+.portfolio-project-card:hover .laptop-mockup {
+    transform: scale(1.02) translateZ(20px);
+    box-shadow: 
+        0 30px 70px rgba(0, 0, 0, 0.8),
+        inset 0 1px 1px rgba(255, 255, 255, 0.1);
+    border-color: rgba(163, 207, 62, 0.3);
+}
+
+.laptop-camera {
+    position: absolute;
+    top: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 6px;
+    height: 6px;
+    background: #09090b;
+    border-radius: 50%;
+    box-shadow: inset 0 1px 2px rgba(255,255,255,0.1);
+}
+
+.laptop-screen {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    background: #000;
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
 }
 
 .portfolio-img {
@@ -1090,35 +1126,41 @@ img {
     width: 100%;
     height: 100%;
     background-size: cover;
-    background-position: center;
-    transition: transform 0.8s var(--ease-out-expo);
+    background-position: top center;
+    transition: transform 1.5s var(--ease-out-expo);
 }
 
-.portfolio-card:hover .portfolio-img {
-    transform: scale(1.08);
+.portfolio-project-card:hover .portfolio-img {
+    transform: scale(1.05);
 }
 
-.portfolio-overlay {
+.laptop-base {
     position: absolute;
-    inset: 0;
+    bottom: -15px;
+    left: -24px;
+    right: -24px;
+    height: 15px;
+    background: linear-gradient(to bottom, #2a2a2e 0%, #151518 100%);
+    border-radius: 0 0 16px 16px;
+    border: 1px solid rgba(255,255,255,0.05);
+    border-top: 1px solid rgba(255,255,255,0.15);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.6);
     display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    padding: 40px;
-    background: linear-gradient(to top, 
-        rgba(13, 13, 15, 0.95) 0%, 
-        rgba(13, 13, 15, 0.4) 50%, 
-        transparent 100%);
-    opacity: 0.85;
-    transition: all 0.5s var(--ease-out-expo);
+    justify-content: center;
 }
 
-.portfolio-card:hover .portfolio-overlay {
-    background: linear-gradient(to top, 
-        rgba(13, 13, 15, 0.98) 0%, 
-        rgba(13, 13, 15, 0.6) 60%, 
-        transparent 100%);
-    opacity: 1;
+.laptop-indent {
+    width: 15%;
+    height: 4px;
+    background: #111;
+    border-radius: 0 0 4px 4px;
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.8);
+}
+
+/* --- Portfolio Info (Below Laptop) --- */
+.portfolio-info {
+    text-align: center;
+    padding: 0 20px;
 }
 
 .portfolio-cat {
@@ -1129,65 +1171,64 @@ img {
     color: var(--accent-blue);
     margin-bottom: 12px;
     display: block;
-    transform: translateY(10px);
-    transition: transform 0.5s var(--ease-out-expo);
+    transition: color 0.4s;
 }
 
-.portfolio-overlay h3 {
+.portfolio-info h3 {
     font-family: var(--font-display);
-    font-size: 1.8rem;
+    font-size: 1.6rem;
     font-weight: 700;
-    margin-bottom: 10px;
-    letter-spacing: -0.02em;
-    transform: translateY(10px);
-    transition: transform 0.5s var(--ease-out-expo) 0.05s;
+    margin-bottom: 12px;
+    letter-spacing: -0.01em;
+    color: var(--text-primary);
 }
 
-.portfolio-overlay p {
+.portfolio-info p {
     font-size: 0.95rem;
     color: var(--text-secondary);
     line-height: 1.6;
     max-width: 90%;
-    transform: translateY(10px);
-    opacity: 0;
-    transition: all 0.5s var(--ease-out-expo) 0.1s;
+    margin: 0 auto;
 }
 
-.portfolio-card:hover .portfolio-cat,
-.portfolio-card:hover h3,
-.portfolio-card:hover p {
-    transform: translateY(0);
-}
-
-.portfolio-card:hover p {
-    opacity: 1;
-}
-
-.portfolio-card:hover {
-    transform: translateY(-10px) translateZ(30px);
-    box-shadow: 0 30px 100px rgba(0, 0, 0, 0.6);
-    border-color: rgba(255, 255, 255, 0.15);
-}
-
-.portfolio-card .card-glow {
-    background: var(--accent-blue);
-}
-
-.portfolio-card:hover .card-glow {
-    opacity: 0.08;
-}
-
-/* Linked portfolio card specific refinements */
-.portfolio-card-link:hover {
-    border-color: var(--accent-green);
-}
-
-.portfolio-card-link:hover .portfolio-cat {
+.portfolio-project-card:hover .portfolio-cat {
     color: var(--accent-green);
 }
 
-.portfolio-card-link .card-glow {
+.portfolio-project-card .card-glow {
+    background: var(--accent-blue);
+}
+
+.portfolio-project-card:hover .card-glow {
     background: var(--accent-green);
+    opacity: 0.1;
+}
+
+/* Mobile Portfolio CTA */
+.show-on-mobile {
+    display: none;
+}
+
+.mobile-portfolio-cta {
+    text-align: center;
+    padding: 20px 20px;
+    margin-top: 20px;
+}
+
+@media (max-width: 900px) {
+    .hide-on-mobile {
+        display: none !important;
+    }
+    
+    .show-on-mobile {
+        display: block !important;
+    }
+
+    .portfolio-grid {
+        grid-template-columns: 1fr;
+        gap: 90px;
+
+    }
 }
 
 /* ============================================================
